@@ -2,485 +2,412 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>ImDeer</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
 }
 
-html, body {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+body{
+    font-family:Arial,sans-serif;
+    color:#55445d;
+    background:#faf2ff;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f8edff;
-    color: #59465f;
+.screen{
+    position:absolute;
+    inset:0;
+    display:none;
 }
 
-button,
-input {
-    font: inherit;
+.screen.active{
+    display:block;
 }
 
-.screen {
-    position: absolute;
-    inset: 0;
-    display: none;
-}
-
-.screen.active {
-    display: block;
-}
 
 /* ================= MENU ================= */
 
-#menu {
-    background:
-        radial-gradient(circle at 20% 20%, #ffffff 0 2px, transparent 3px),
-        linear-gradient(135deg, #fff5fc, #eaf8ff);
-
-    display: none;
-    align-items: center;
-    justify-content: center;
+#menu{
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#fff4fc,#eaf8ff);
 }
 
-#menu.active {
-    display: flex;
+#menu.active{
+    display:flex;
 }
 
-.menuBox {
-    width: min(650px, 90vw);
-    padding: 55px 30px;
-    text-align: center;
-
-    background: rgba(255,255,255,.82);
-    border-radius: 35px;
-
-    box-shadow:
-        0 20px 70px rgba(80,50,90,.15);
+.menuBox{
+    width:min(600px,90vw);
+    padding:45px 30px;
+    text-align:center;
+    background:#ffffffdd;
+    border-radius:30px;
+    box-shadow:0 20px 70px #80608025;
 }
 
-.menuBox h1 {
-    margin: 0;
-    font-size: clamp(55px, 10vw, 90px);
-    color: #a078b3;
+.menuBox h1{
+    margin:0;
+    font-size:clamp(60px,10vw,95px);
+    color:#a078b3;
 }
 
-.menuBox p {
-    opacity: .65;
+.menuBox p{
+    opacity:.55;
 }
 
-.menuButton {
-    display: block;
-    width: min(300px, 80%);
-    margin: 14px auto;
-
-    padding: 15px;
-
-    border: none;
-    border-radius: 17px;
-
-    background: #dabce7;
-    color: #573f61;
-
-    box-shadow: 0 6px 0 #b38bc0;
-
-    cursor: pointer;
-    transition: .15s;
+.menuButton{
+    width:min(300px,80%);
+    margin:12px auto;
+    padding:15px;
+    border:0;
+    border-radius:15px;
+    background:#dabce7;
+    color:#573f61;
+    cursor:pointer;
+    box-shadow:0 5px #b38bc0;
 }
 
-.menuButton:hover {
-    transform: translateY(-2px);
+.menuButton:active{
+    transform:translateY(4px);
+    box-shadow:0 1px #b38bc0;
 }
 
-.menuButton:active {
-    transform: translateY(4px);
-    box-shadow: 0 2px 0 #b38bc0;
+#continueButton{
+    display:none;
 }
 
-#continueButton {
-    display: none;
+#resetButton{
+    margin-top:25px;
+    border:0;
+    background:none;
+    opacity:.35;
+    cursor:pointer;
 }
+
 
 /* ================= ROOM ================= */
 
-#room {
-    background: #f8edff;
+#room.active{
+    display:block;
 }
 
-.topBar {
-    height: 70px;
-
-    padding: 15px 22px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    background: rgba(255,255,255,.7);
-
-    border-bottom: 2px solid #ead8ef;
+.topBar{
+    height:65px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 20px;
+    background:#ffffffbb;
+    border-bottom:2px solid #ead8ef;
 }
 
-.notebookButton {
-    border: none;
-    border-radius: 12px;
-
-    padding: 9px 14px;
-
-    background: white;
-    cursor: pointer;
+.notebookButton{
+    border:0;
+    border-radius:10px;
+    padding:9px 13px;
+    background:white;
+    cursor:pointer;
 }
 
-.room {
-    position: absolute;
-    inset: 70px 0 0;
+.roomArea{
+    position:absolute;
+    inset:65px 0 0;
 
     background:
-        radial-gradient(circle at 20% 25%, white 0 2px, transparent 3px),
+        radial-gradient(circle at 20% 25%,white 0 2px,transparent 3px),
         linear-gradient(
             #fff7ff 0%,
             #fff7ff 70%,
             #dac7dc 70%,
             #dac7dc 100%
         );
+
+    transition:1s;
 }
 
-.object {
-    position: absolute;
-
-    border: none;
-    border-radius: 18px;
-
-    background: #fffafd;
-
-    color: #654d6c;
-
-    box-shadow: 0 8px 25px rgba(70,50,80,.12);
-
-    cursor: pointer;
-
-    transition: .2s;
+.roomArea.dark{
+    background:
+        radial-gradient(circle at 70% 30%,#cdb9d2 0 1px,transparent 2px),
+        linear-gradient(
+            #ddd0e1 0%,
+            #ddd0e1 70%,
+            #9f8ca3 70%,
+            #9f8ca3 100%
+        );
 }
 
-.object:hover {
-    transform: scale(1.04);
+.object{
+    position:absolute;
+    border:0;
+    border-radius:17px;
+    background:#fffafd;
+    color:#654d6c;
+    box-shadow:0 8px 25px #46325020;
+    cursor:pointer;
+    transition:.2s;
 }
 
-#clock {
-    top: 10%;
-    left: 12%;
-
-    width: 110px;
-    height: 110px;
-
-    border-radius: 50%;
-
-    font-weight: bold;
+.object:hover{
+    transform:scale(1.05);
 }
 
-#books {
-    left: 15%;
-    bottom: 14%;
-
-    width: 160px;
-    height: 80px;
+#clock{
+    top:10%;
+    left:12%;
+    width:110px;
+    height:110px;
+    border-radius:50%;
 }
 
-#poster {
-    right: 17%;
-    top: 14%;
-
-    width: 180px;
-    height: 120px;
+#books{
+    left:15%;
+    bottom:14%;
+    width:160px;
+    height:80px;
 }
 
-#drawer {
-    right: 18%;
-    bottom: 14%;
-
-    width: 140px;
-    height: 80px;
+#poster{
+    right:17%;
+    top:14%;
+    width:180px;
+    height:120px;
 }
 
-#symbols {
-    left: 44%;
-    top: 48%;
-
-    width: 180px;
-    height: 80px;
-
-    font-size: 22px;
+#drawer{
+    right:18%;
+    bottom:14%;
+    width:140px;
+    height:80px;
 }
 
-#status {
-    position: absolute;
-
-    left: 20px;
-    bottom: 20px;
-
-    opacity: .55;
+#symbols{
+    left:44%;
+    top:48%;
+    width:180px;
+    height:80px;
+    font-size:22px;
 }
 
-/* ================= PUZZLE ================= */
-
-#puzzle {
-    background: #faf3ff;
-
-    display: none;
-    align-items: center;
-    justify-content: center;
+#mirror{
+    right:5%;
+    top:43%;
+    width:100px;
+    height:170px;
+    display:none;
 }
 
-#puzzle.active {
-    display: flex;
+#status{
+    position:absolute;
+    left:20px;
+    bottom:20px;
+    opacity:.55;
 }
 
-.puzzleBox {
-    width: min(700px, 92vw);
 
-    padding: 35px;
+/* ================= PUZZLES ================= */
 
-    background: white;
-
-    border-radius: 28px;
-
-    box-shadow: 0 20px 70px rgba(80,50,90,.15);
+#puzzle{
+    align-items:center;
+    justify-content:center;
+    background:#faf3ff;
 }
 
-.cipher {
-    margin: 25px 0;
-
-    padding: 25px;
-
-    background: #f3e7f8;
-
-    border-radius: 15px;
-
-    text-align: center;
-
-    font-family: monospace;
-
-    font-size: 32px;
-
-    letter-spacing: 5px;
-
-    word-break: break-all;
+#puzzle.active{
+    display:flex;
 }
 
-#answer {
-    width: 100%;
-
-    padding: 14px;
-
-    border: 2px solid #e5d5eb;
-
-    border-radius: 13px;
-
-    outline: none;
+.puzzleBox{
+    width:min(720px,92vw);
+    max-height:90vh;
+    overflow:auto;
+    padding:35px;
+    background:white;
+    border-radius:28px;
+    box-shadow:0 20px 70px #50325025;
 }
 
-.solveButton {
-    width: 100%;
-
-    margin-top: 12px;
-
-    padding: 14px;
-
-    border: none;
-
-    border-radius: 13px;
-
-    background: #d5b1e4;
-
-    cursor: pointer;
+#puzzleNumber{
+    opacity:.45;
+    font-size:14px;
 }
 
-#message {
-    min-height: 25px;
-
-    margin-top: 12px;
+.cipher{
+    margin:25px 0;
+    padding:25px;
+    background:#f3e7f8;
+    border-radius:15px;
+    text-align:center;
+    font-family:monospace;
+    font-size:clamp(20px,4vw,34px);
+    letter-spacing:4px;
+    word-break:break-word;
 }
+
+#answer{
+    width:100%;
+    padding:14px;
+    border:2px solid #e5d5eb;
+    border-radius:12px;
+    outline:none;
+}
+
+#solveButton{
+    width:100%;
+    margin-top:12px;
+    padding:14px;
+    border:0;
+    border-radius:12px;
+    background:#d5b1e4;
+    cursor:pointer;
+}
+
+#message{
+    min-height:25px;
+}
+
 
 /* ================= NOTEBOOK ================= */
 
-#notebook {
-    background: rgba(50,30,60,.3);
-
-    backdrop-filter: blur(5px);
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
+#notebook{
+    align-items:center;
+    justify-content:center;
+    background:#0004;
 }
 
-#notebook.active {
-    display: flex;
+#notebook.active{
+    display:flex;
 }
 
-.notebook {
-    width: min(620px, 90vw);
-    max-height: 80vh;
-
-    overflow-y: auto;
-
-    padding: 30px;
-
-    background: #fffdf0;
-
-    border-radius: 20px;
-
-    box-shadow: 0 20px 80px rgba(0,0,0,.2);
+.notebook{
+    width:min(600px,90vw);
+    max-height:80vh;
+    overflow:auto;
+    padding:30px;
+    background:#fffdf0;
+    border-radius:20px;
 }
 
-.closeButton {
-    float: right;
-
-    border: none;
-
-    background: none;
-
-    font-size: 24px;
-
-    cursor: pointer;
+.closeButton{
+    float:right;
+    border:0;
+    background:none;
+    font-size:25px;
+    cursor:pointer;
 }
+
+.note{
+    padding:12px;
+    margin:10px 0;
+    background:#fff8d9;
+    border-radius:10px;
+}
+
 
 /* ================= ENDING ================= */
 
-#ending {
-    background: #f8edff;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
+#ending{
+    align-items:center;
+    justify-content:center;
+    background:#f8edff;
 }
 
-#ending.active {
-    display: flex;
+#ending.active{
+    display:flex;
 }
 
-#redText {
-    position: absolute;
-
-    inset: 0;
-
-    overflow: hidden;
-
-    pointer-events: none;
-
-    font-family: monospace;
-
-    font-weight: 900;
-
-    color: red;
-
-    font-size: clamp(15px, 2.5vw, 30px);
-
-    text-shadow: 0 0 8px red;
+#redText{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    display:none;
+    color:red;
+    font-family:monospace;
+    font-size:clamp(20px,3vw,38px);
+    font-weight:900;
+    line-height:1.7;
+    text-shadow:0 0 8px red;
 }
 
-.redLine {
-    position: absolute;
-
-    white-space: nowrap;
-
-    animation: moveText 2s linear forwards;
+.textStream{
+    position:absolute;
+    width:250vw;
+    height:250vh;
+    left:-70vw;
+    top:-70vh;
+    animation:moveText 1s linear infinite;
 }
 
-@keyframes moveText {
-
-    from {
-        transform: translate(100vw, -10vh);
+@keyframes moveText{
+    from{
+        transform:translate(65vw,-65vh);
     }
-
-    to {
-        transform: translate(-120vw, 110vh);
+    to{
+        transform:translate(-65vw,65vh);
     }
-
 }
 
-#finalText {
-    position: absolute;
-
-    inset: 0;
-
-    display: none;
-
-    align-items: flex-end;
-    justify-content: flex-start;
-
-    padding: 25px;
-
-    background: black;
-
-    color: red;
-
-    font-family: monospace;
-
-    font-size: 26px;
-
-    font-weight: bold;
+#finalText{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:flex-end;
+    justify-content:flex-start;
+    padding:25px;
+    background:#000;
+    color:red;
+    font-family:monospace;
+    font-size:28px;
+    font-weight:bold;
 }
 
-#crash {
-    position: absolute;
-
-    inset: 0;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    background: #050505;
-
-    color: #888;
-
-    font-family: monospace;
-
-    font-size: 14px;
+#fakeCrash{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:#050505;
+    color:#888;
+    font-family:monospace;
 }
+
 </style>
 </head>
 
 <body>
 
-<div id="game">
 
 <!-- ================= MENU ================= -->
 
 <section id="menu" class="screen active">
 
-    <div class="menuBox">
+<div class="menuBox">
 
-        <h1>ImDeer</h1>
+<h1>ImDeer</h1>
 
-        <p>
-            a tiny little puzzle game ♡
-        </p>
+<p>♡ a tiny little puzzle game ♡</p>
 
-        <button
-            id="playButton"
-            class="menuButton">
-            PLAY
-        </button>
+<button id="playButton" class="menuButton">
+PLAY
+</button>
 
-        <button
-            id="continueButton"
-            class="menuButton">
-            CONTINUE
-        </button>
+<button id="continueButton" class="menuButton">
+CONTINUE
+</button>
 
-    </div>
+<button id="resetButton">
+reset save
+</button>
+
+</div>
 
 </section>
 
@@ -489,56 +416,49 @@ input {
 
 <section id="room" class="screen">
 
-    <div class="topBar">
+<div class="topBar">
 
-        <b>♡ Deer Room</b>
+<b>♡ Deer Room</b>
 
-        <button
-            id="notebookButton"
-            class="notebookButton">
-            📓 Notebook
-        </button>
+<button id="notebookButton" class="notebookButton">
+📓 Notebook
+</button>
 
-    </div>
+</div>
 
-    <div class="room">
+<div id="roomArea" class="roomArea">
 
-        <button
-            id="clock"
-            class="object">
-            7:14
-        </button>
+<button id="clock" class="object">
+7:14
+</button>
 
-        <button
-            id="books"
-            class="object">
-            📚 Books
-        </button>
+<button id="books" class="object">
+📚 Books
+</button>
 
-        <button
-            id="poster"
-            class="object">
-            🌸 POSTER<br><br>
-            △ ○ □ ☆
-        </button>
+<button id="poster" class="object">
+🌸 POSTER
+<br><br>
+△ ○ □ ☆
+</button>
 
-        <button
-            id="drawer"
-            class="object">
-            🗄️ Drawer
-        </button>
+<button id="drawer" class="object">
+🗄️ Drawer
+</button>
 
-        <button
-            id="symbols"
-            class="object">
-            △ ○ □ ☆
-        </button>
+<button id="symbols" class="object">
+△ ○ □ ☆
+</button>
 
-    </div>
+<button id="mirror" class="object">
+🪞
+</button>
 
-    <div id="status">
-        Everything looks normal.
-    </div>
+<div id="status">
+Everything looks normal.
+</div>
+
+</div>
 
 </section>
 
@@ -547,40 +467,33 @@ input {
 
 <section id="puzzle" class="screen">
 
-    <div class="puzzleBox">
+<div class="puzzleBox">
 
-        <h2 id="puzzleTitle">
-            A little cipher ♡
-        </h2>
+<div id="puzzleNumber">
+Puzzle 1 / 10
+</div>
 
-        <p id="instruction">
-            The alphabet moved three places.
-        </p>
+<h2 id="puzzleTitle"></h2>
 
-        <div
-            id="cipher"
-            class="cipher">
-            KHOOR
-        </div>
+<p id="instruction"></p>
 
-        <input
-            id="answer"
-            placeholder="type your answer..."
-            autocomplete="off">
+<div id="cipher" class="cipher"></div>
 
-        <button
-            id="solveButton"
-            class="solveButton">
-            SOLVE
-        </button>
+<input
+id="answer"
+placeholder="type your answer..."
+autocomplete="off"
+>
 
-        <p id="hint">
-            Hint: shift the letters backward.
-        </p>
+<button id="solveButton">
+SOLVE
+</button>
 
-        <div id="message"></div>
+<p id="hint"></p>
 
-    </div>
+<div id="message"></div>
+
+</div>
 
 </section>
 
@@ -589,38 +502,17 @@ input {
 
 <section id="notebook" class="screen">
 
-    <div class="notebook">
+<div class="notebook">
 
-        <button
-            id="closeNotebook"
-            class="closeButton">
-            ×
-        </button>
+<button id="closeNotebook" class="closeButton">
+×
+</button>
 
-        <h2>📓 Cipher Notebook</h2>
+<h2>📓 Notebook</h2>
 
-        <p>
-            <b>Caesar</b><br>
-            Letters are shifted through the alphabet.
-        </p>
+<div id="notes"></div>
 
-        <p>
-            <b>A1Z26</b><br>
-            A = 1, B = 2, C = 3...
-        </p>
-
-        <p>
-            <b>Atbash</b><br>
-            A ↔ Z, B ↔ Y, C ↔ X...
-        </p>
-
-        <hr>
-
-        <p id="mystery">
-            Nothing unusual has been written here.
-        </p>
-
-    </div>
+</div>
 
 </section>
 
@@ -629,548 +521,944 @@ input {
 
 <section id="ending" class="screen">
 
-    <button
-        id="endingContinue"
-        class="menuButton"
-        style="position:relative;width:220px">
-        CONTINUE
-    </button>
+<button
+id="endingContinue"
+class="menuButton"
+style="position:relative;width:220px"
+>
+CONTINUE
+</button>
 
-    <div id="redText"></div>
+<div id="redText"></div>
 
-    <div id="finalText">
-        TAKE THE DEAD TO
-    </div>
+<div id="finalText">
+TAKE THE DEAD TO
+</div>
 
-    <div id="crash">
-        ImDeer stopped responding.
-    </div>
+<div id="fakeCrash">
+ImDeer stopped responding.
+</div>
 
 </section>
-
-</div>
 
 
 <script>
 
-/* =========================================
-   BASIC GAME SYSTEM
-========================================= */
+/* =====================================================
+   SAVE
+===================================================== */
 
-const screens = [
-    "menu",
-    "room",
-    "puzzle",
-    "notebook",
-    "ending"
-];
+const SAVE_KEY = "IMDEER_FINAL_GAME";
 
 let progress =
-    Number(localStorage.getItem("imDeerProgress") || 0);
+Number(localStorage.getItem(SAVE_KEY) || 1);
+
+let notes =
+JSON.parse(
+localStorage.getItem(SAVE_KEY+"_notes") || "[]"
+);
+
+if(progress < 1 || progress > 11){
+    progress = 1;
+}
+
+function save(){
+
+    localStorage.setItem(
+        SAVE_KEY,
+        String(progress)
+    );
+
+    localStorage.setItem(
+        SAVE_KEY+"_notes",
+        JSON.stringify(notes)
+    );
+}
 
 
-function showScreen(name) {
+/* =====================================================
+   SCREEN CONTROL
+===================================================== */
 
-    screens.forEach(screen => {
-
-        document
-            .getElementById(screen)
-            .classList.remove("active");
-
-    });
+function show(id){
 
     document
-        .getElementById(name)
+        .querySelectorAll(".screen")
+        .forEach(screen =>
+            screen.classList.remove("active")
+        );
+
+    document
+        .getElementById(id)
         .classList.add("active");
 }
 
 
-function saveProgress() {
+/* =====================================================
+   VERIFIED PUZZLES
+===================================================== */
 
-    localStorage.setItem(
-        "imDeerProgress",
-        progress
-    );
+const puzzles = [
 
+/* 1 */
+
+{
+    title:"A little cipher ♡",
+
+    instruction:
+    "The alphabet moved three places.",
+
+    cipher:
+    "KHOOR",
+
+    hint:
+    "Caesar cipher. Shift every letter backward by 3.",
+
+    answer:
+    "HELLO",
+
+    note:
+    "Caesar shifts letters."
+},
+
+
+/* 2 */
+
+{
+    title:"Numbers",
+
+    instruction:
+    "Numbers are letters.",
+
+    cipher:
+    "3 - 8 - 5 - 3 - 11",
+
+    hint:
+    "A1Z26: A=1, B=2, C=3...",
+
+    answer:
+    "CHECK",
+
+    note:
+    "A1Z26 converts numbers into letters."
+},
+
+
+/* 3 */
+
+{
+    title:"The backwards alphabet",
+
+    instruction:
+    "Everything has its opposite.",
+
+    cipher:
+    "XSVXP",
+
+    hint:
+    "Atbash: A becomes Z, B becomes Y...",
+
+    answer:
+    "CHECK",
+
+    note:
+    "Atbash reverses the alphabet."
+},
+
+
+/* 4 */
+
+{
+    title:"Dots and dashes",
+
+    instruction:
+    "The symbols speak.",
+
+    cipher:
+    ".... . .-.. .--.",
+
+    hint:
+    "Morse code.",
+
+    answer:
+    "HELP",
+
+    note:
+    "Morse uses dots and dashes."
+},
+
+
+/* 5 */
+
+{
+    title:"The hidden key",
+
+    instruction:
+    "The key is DEER.",
+
+    cipher:
+    "GHWIK",
+
+    hint:
+    "Vigenère cipher. Use DEER repeatedly.",
+
+    answer:
+    "DEATH",
+
+    note:
+    "Vigenère uses a repeating keyword."
+},
+
+
+/* 6 */
+
+{
+    title:"The broken message",
+
+    instruction:
+    "The message has been split apart.",
+
+    cipher:
+    "XCEHCXK",
+
+    hint:
+    "Take the letters in positions 2, 3, 5, 6, and 7.",
+
+    answer:
+    "CHECK",
+
+    note:
+    "Not every letter belongs to the message."
+},
+
+
+/* 7 */
+
+{
+    title:"Numbers again",
+
+    instruction:
+    "Each number represents a letter.",
+
+    cipher:
+    "1-20-20-1-3-11",
+
+    hint:
+    "A1Z26: A=1, B=2, C=3...",
+
+    answer:
+    "ATTACK",
+
+    note:
+    "Numbers can hide words."
+},
+
+
+/* 8 */
+
+{
+    title:"Three steps",
+
+    instruction:
+    "Decode the numbers, then reverse the result.",
+
+    cipher:
+    "11-3-5-8-3",
+
+    hint:
+    "A1Z26 first, then reverse the letters.",
+
+    answer:
+    "CHECK",
+
+    note:
+    "Some puzzles require multiple operations."
+},
+
+
+/* 9 */
+
+{
+    title:"The reflection",
+
+    instruction:
+    "The answer is hiding backwards.",
+
+    cipher:
+    "KC EHC",
+
+    hint:
+    "Reverse the entire message.",
+
+    answer:
+    "CHECK",
+
+    note:
+    "Something is wrong with the reflection."
+},
+
+
+/* 10 */
+
+{
+    title:"One last thing",
+
+    instruction:
+    "Numbers → letters → reverse.",
+
+    cipher:
+    "20-5-18-3-5-19",
+
+    hint:
+    "A1Z26 first, then reverse the result.",
+
+    answer:
+    "SECRET",
+
+    note:
+    "The final cipher combines everything."
 }
 
-
-/* =========================================
-   MENU
-========================================= */
-
-const playButton =
-    document.getElementById("playButton");
-
-const continueButton =
-    document.getElementById("continueButton");
+];
 
 
-playButton.onclick = () => {
+/* =====================================================
+   PUZZLE → OBJECT
+===================================================== */
 
-    progress = 1;
+const objectForPuzzle = {
 
-    saveProgress();
-
-    showScreen("room");
+    1:"poster",
+    2:"books",
+    3:"drawer",
+    4:"symbols",
+    5:"clock",
+    6:"poster",
+    7:"books",
+    8:"drawer",
+    9:"mirror",
+    10:"symbols"
 
 };
 
 
-if (progress > 0) {
-
-    continueButton.style.display = "block";
-
-}
-
-
-continueButton.onclick = () => {
-
-    showScreen("room");
-
-};
-
-
-/* =========================================
+/* =====================================================
    ROOM
-========================================= */
+===================================================== */
 
-const statusText =
-    document.getElementById("status");
+const roomArea =
+document.getElementById("roomArea");
 
+const status =
+document.getElementById("status");
 
-document
-    .getElementById("clock")
-    .onclick = () => {
+const clock =
+document.getElementById("clock");
 
-        if (progress < 2) {
-
-            statusText.textContent =
-                "The clock isn't moving.";
-
-        } else {
-
-            document
-                .getElementById("clock")
-                .textContent = "11:03";
-
-            statusText.textContent =
-                "That wasn't the time before.";
-
-        }
-
-    };
+const mirror =
+document.getElementById("mirror");
 
 
-document
-    .getElementById("books")
-    .onclick = () => {
+function updateRoom(){
 
-        statusText.textContent =
-            "One book is upside down.";
+    if(progress >= 4){
 
-    };
+        roomArea.classList.add("dark");
 
+    }else{
 
-document
-    .getElementById("poster")
-    .onclick = () => {
-
-        progress = Math.max(progress, 2);
-
-        saveProgress();
-
-        openPuzzle(1);
-
-    };
-
-
-document
-    .getElementById("symbols")
-    .onclick = () => {
-
-        progress = Math.max(progress, 2);
-
-        saveProgress();
-
-        openPuzzle(1);
-
-    };
-
-
-document
-    .getElementById("drawer")
-    .onclick = () => {
-
-        if (progress < 3) {
-
-            statusText.textContent =
-                "It's locked.";
-
-        } else {
-
-            openPuzzle(2);
-
-        }
-
-    };
-
-
-/* =========================================
-   PUZZLES
-========================================= */
-
-const cipher =
-    document.getElementById("cipher");
-
-const answer =
-    document.getElementById("answer");
-
-const message =
-    document.getElementById("message");
-
-const solveButton =
-    document.getElementById("solveButton");
-
-
-function openPuzzle(number) {
-
-    showScreen("puzzle");
-
-    answer.value = "";
-
-    message.textContent = "";
-
-
-    if (number === 1) {
-
-        document
-            .getElementById("puzzleTitle")
-            .textContent =
-            "A little cipher ♡";
-
-        document
-            .getElementById("instruction")
-            .textContent =
-            "The alphabet moved three places.";
-
-        cipher.textContent =
-            "KHOOR";
-
-        document
-            .getElementById("hint")
-            .textContent =
-            "Hint: shift the letters backward.";
-
-        solveButton.dataset.answer =
-            "HELLO";
+        roomArea.classList.remove("dark");
 
     }
 
 
-    if (number === 2) {
+    if(progress >= 9){
 
-        document
-            .getElementById("puzzleTitle")
-            .textContent =
-            "The drawer";
+        mirror.style.display = "block";
 
-        document
-            .getElementById("instruction")
-            .textContent =
-            "Numbers are letters.";
+    }else{
 
-        cipher.textContent =
-            "3 - 8 - 5 - 3 - 11";
-
-        document
-            .getElementById("hint")
-            .textContent =
-            "Hint: A1Z26.";
-
-        solveButton.dataset.answer =
-            "CHECK";
+        mirror.style.display = "none";
 
     }
 
+
+    if(progress >= 7){
+
+        clock.textContent = "3:33";
+
+    }else{
+
+        clock.textContent = "7:14";
+
+    }
+
+
+    if(progress >= 9){
+
+        clock.textContent = "00:00";
+
+    }
 }
 
 
-solveButton.onclick = () => {
+/* =====================================================
+   OBJECT CLICK SYSTEM
+===================================================== */
 
-    const entered =
-        answer.value
-            .trim()
-            .toUpperCase();
+function clickObject(id){
 
-    const expected =
-        solveButton.dataset.answer;
+    /*
+       Nothing can happen after Puzzle 10.
+    */
 
-
-    if (entered !== expected) {
-
-        message.textContent =
-            "Nope. Try again.";
-
+    if(progress > 10){
         return;
-
     }
-
-
-    progress++;
-
-    saveProgress();
-
-
-    message.textContent =
-        "Correct.";
-
-
-    if (progress >= 4) {
-
-        document
-            .getElementById("mystery")
-            .textContent =
-            "△ is not always △.";
-
-        setTimeout(() => {
-
-            showScreen("ending");
-
-        }, 700);
-
-    } else {
-
-        setTimeout(() => {
-
-            showScreen("room");
-
-            statusText.textContent =
-                "Something in the room feels different.";
-
-        }, 700);
-
-    }
-
-};
-
-
-/* =========================================
-   NOTEBOOK
-========================================= */
-
-document
-    .getElementById("notebookButton")
-    .onclick = () => {
-
-        if (progress >= 4) {
-
-            document
-                .getElementById("mystery")
-                .textContent =
-                "△ is not always △.";
-
-        }
-
-        showScreen("notebook");
-
-    };
-
-
-document
-    .getElementById("closeNotebook")
-    .onclick = () => {
-
-        showScreen("room");
-
-    };
-
-
-/* =========================================
-   ENDING
-========================================= */
-
-document
-    .getElementById("endingContinue")
-    .onclick = () => {
-
-        document
-            .getElementById("endingContinue")
-            .style.display = "none";
-
-        startEnding();
-
-    };
-
-
-function startEnding() {
-
-    const container =
-        document.getElementById("redText");
 
 
     /*
-        Wait before the horror starts.
-
-        This is important.
-
-        The player gets a moment where
-        they think everything is normal.
+       Find the ONE correct object.
     */
+
+    const correct =
+        objectForPuzzle[progress];
+
+
+    /*
+       Wrong object = no puzzle.
+    */
+
+    if(id !== correct){
+
+        const messages = {
+
+            poster:
+            "The poster hasn't changed.",
+
+            books:
+            "The books don't seem relevant yet.",
+
+            drawer:
+            "The drawer won't open.",
+
+            symbols:
+            "The symbols mean nothing... yet.",
+
+            clock:
+            "The clock isn't important yet.",
+
+            mirror:
+            "The reflection looks normal."
+
+        };
+
+        status.textContent =
+            messages[id];
+
+        return;
+    }
+
+
+    /*
+       Correct object.
+    */
+
+    openPuzzle(progress);
+}
+
+
+/* =====================================================
+   OBJECT BUTTONS
+===================================================== */
+
+document.getElementById("poster")
+.onclick =
+() => clickObject("poster");
+
+document.getElementById("books")
+.onclick =
+() => clickObject("books");
+
+document.getElementById("drawer")
+.onclick =
+() => clickObject("drawer");
+
+document.getElementById("symbols")
+.onclick =
+() => clickObject("symbols");
+
+document.getElementById("clock")
+.onclick =
+() => clickObject("clock");
+
+document.getElementById("mirror")
+.onclick =
+() => clickObject("mirror");
+
+
+/* =====================================================
+   OPEN PUZZLE
+===================================================== */
+
+function openPuzzle(number){
+
+    /*
+       Absolute anti-skip protection.
+    */
+
+    if(number !== progress){
+        return;
+    }
+
+    if(number < 1 || number > 10){
+        return;
+    }
+
+
+    const puzzle =
+        puzzles[number - 1];
+
+
+    document.getElementById("puzzleNumber")
+    .textContent =
+        "Puzzle " + number + " / 10";
+
+
+    document.getElementById("puzzleTitle")
+    .textContent =
+        puzzle.title;
+
+
+    document.getElementById("instruction")
+    .textContent =
+        puzzle.instruction;
+
+
+    document.getElementById("cipher")
+    .textContent =
+        puzzle.cipher;
+
+
+    document.getElementById("hint")
+    .textContent =
+        "Hint: " + puzzle.hint;
+
+
+    document.getElementById("answer")
+    .value = "";
+
+
+    document.getElementById("message")
+    .textContent = "";
+
+
+    show("puzzle");
+
 
     setTimeout(() => {
 
-        let count = 0;
+        document
+        .getElementById("answer")
+        .focus();
+
+    },50);
+}
 
 
-        function spawnText() {
+/* =====================================================
+   SOLVE
+===================================================== */
 
-            if (count >= 45)
-                return;
+function solve(){
 
-
-            const line =
-                document.createElement("div");
-
-
-            line.className =
-                "redLine";
+    if(progress < 1 || progress > 10){
+        return;
+    }
 
 
-            /*
-                The repetition gets longer
-                as the sequence progresses.
-            */
-
-            line.textContent =
-                "TAKE THE DEAD TO ".repeat(
-                    2 + Math.floor(count / 6)
-                );
+    const puzzle =
+        puzzles[progress - 1];
 
 
-            /*
-                Start near the upper-right.
-                CSS moves it diagonally toward
-                the bottom-left.
-            */
-
-            line.style.left =
-                (65 + Math.random() * 35) + "vw";
-
-            line.style.top =
-                (-20 - Math.random() * 30) + "vh";
+    const entered =
+        document
+        .getElementById("answer")
+        .value
+        .trim()
+        .toUpperCase()
+        .replace(/\s+/g,"");
 
 
-            /*
-                Gets faster over time.
-            */
-
-            line.style.animationDuration =
-                Math.max(
-                    .55,
-                    2.2 - count * .035
-                ) + "s";
+    const correct =
+        puzzle.answer
+        .toUpperCase()
+        .replace(/\s+/g,"");
 
 
-            container.appendChild(line);
+    if(entered !== correct){
+
+        document
+        .getElementById("message")
+        .textContent =
+        "Wrong. Look closer.";
+
+        return;
+    }
 
 
-            count++;
+    document
+    .getElementById("message")
+    .textContent =
+    "Correct.";
 
 
-            setTimeout(
-                spawnText,
-                Math.max(
-                    35,
-                    170 - count * 3
-                )
-            );
+    if(!notes.includes(puzzle.note)){
+
+        notes.push(puzzle.note);
+
+    }
+
+
+    /*
+       THIS IS THE ONLY PLACE
+       progress increases.
+    */
+
+    progress++;
+
+    save();
+
+
+    setTimeout(() => {
+
+        if(progress === 11){
+
+            show("ending");
+
+        }else{
+
+            show("room");
+
+            updateRoom();
+
+            status.textContent =
+                "Something feels slightly different.";
 
         }
 
+    },700);
+}
 
-        spawnText();
+
+document
+.getElementById("solveButton")
+.onclick =
+solve;
 
 
-        /*
-            After the text chaos:
-            black screen + final message.
-        */
+document
+.getElementById("answer")
+.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Enter"){
+
+            solve();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   MENU
+===================================================== */
+
+const continueButton =
+document.getElementById("continueButton");
+
+
+function updateMenu(){
+
+    if(progress > 1){
+
+        continueButton.style.display =
+            "block";
+
+    }else{
+
+        continueButton.style.display =
+            "none";
+
+    }
+}
+
+
+document
+.getElementById("playButton")
+.onclick =
+() => {
+
+    /*
+       PLAY = start completely fresh.
+    */
+
+    progress = 1;
+
+    notes = [];
+
+    save();
+
+    show("room");
+
+    updateRoom();
+
+    status.textContent =
+        "Everything looks normal.";
+
+};
+
+
+continueButton.onclick =
+() => {
+
+    if(progress === 11){
+
+        show("ending");
+
+    }else{
+
+        show("room");
+
+        updateRoom();
+
+    }
+
+};
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+document
+.getElementById("resetButton")
+.onclick =
+() => {
+
+    localStorage.removeItem(SAVE_KEY);
+
+    localStorage.removeItem(
+        SAVE_KEY+"_notes"
+    );
+
+    progress = 1;
+
+    notes = [];
+
+    updateMenu();
+
+    show("menu");
+
+};
+
+
+/* =====================================================
+   NOTEBOOK
+===================================================== */
+
+function updateNotes(){
+
+    const box =
+        document.getElementById("notes");
+
+    box.innerHTML = "";
+
+
+    if(notes.length === 0){
+
+        box.innerHTML =
+            "<p>It's empty.</p>";
+
+        return;
+    }
+
+
+    notes.forEach(note => {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "note";
+
+        div.textContent =
+            note;
+
+        box.appendChild(div);
+
+    });
+}
+
+
+document
+.getElementById("notebookButton")
+.onclick =
+() => {
+
+    updateNotes();
+
+    show("notebook");
+
+};
+
+
+document
+.getElementById("closeNotebook")
+.onclick =
+() => {
+
+    show("room");
+
+};
+
+
+/* =====================================================
+   ENDING
+===================================================== */
+
+document
+.getElementById("endingContinue")
+.onclick =
+() => {
+
+    document
+    .getElementById("endingContinue")
+    .style.display =
+        "none";
+
+    startEnding();
+
+};
+
+
+function createTextStream(){
+
+    const stream =
+        document.createElement("div");
+
+    stream.className =
+        "textStream";
+
+
+    let text = "";
+
+
+    for(let i=0;i<110;i++){
+
+        text +=
+            "TAKE THE DEAD TO ".repeat(18);
+
+        text += "<br>";
+
+    }
+
+
+    stream.innerHTML =
+        text;
+
+
+    return stream;
+}
+
+
+function startEnding(){
+
+    const red =
+        document.getElementById("redText");
+
+
+    red.innerHTML = "";
+
+    red.style.display =
+        "block";
+
+
+    /*
+       Several streams means the text
+       keeps entering from the top-right
+       while disappearing off the bottom-left.
+    */
+
+    for(let i=0;i<5;i++){
+
+        const stream =
+            createTextStream();
+
+        stream.style.animationDelay =
+            (-i * .2) + "s";
+
+        red.appendChild(stream);
+
+    }
+
+
+    setTimeout(() => {
+
+        red.style.display =
+            "none";
+
+
+        document
+        .getElementById("finalText")
+        .style.display =
+            "flex";
+
 
         setTimeout(() => {
 
-            container.innerHTML = "";
+            document
+            .getElementById("finalText")
+            .style.display =
+                "none";
+
 
             document
-                .getElementById("finalText")
-                .style.display = "flex";
+            .getElementById("fakeCrash")
+            .style.display =
+                "flex";
 
 
             setTimeout(() => {
 
                 document
-                    .getElementById("finalText")
-                    .style.display = "none";
+                .getElementById("fakeCrash")
+                .style.display =
+                    "none";
 
 
-                document
-                    .getElementById("crash")
-                    .style.display = "flex";
+                show("menu");
 
+                updateMenu();
 
-                /*
-                    We cannot actually crash the
-                    player's browser.
+            },1800);
 
-                    Instead we simulate the crash
-                    and reload the game.
-                */
+        },1200);
 
-                setTimeout(() => {
-
-                    localStorage.setItem(
-                        "imDeerCrashed",
-                        "1"
-                    );
-
-                    location.reload();
-
-                }, 1500);
-
-
-            }, 900);
-
-
-        }, 5000);
-
-
-    }, 1800);
-
+    },9000);
 }
 
 
-/* =========================================
-   AFTER "CRASH"
-========================================= */
+/* =====================================================
+   START
+===================================================== */
 
-if (
-    localStorage.getItem("imDeerCrashed")
-    === "1"
-) {
+updateMenu();
 
-    localStorage.removeItem(
-        "imDeerCrashed"
-    );
-
-    /*
-        Continue disappears after the
-        fake crash.
-    */
-
-    continueButton.style.display =
-        "none";
-
-}
+updateRoom();
 
 </script>
 
